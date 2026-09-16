@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aparente — Estudio de diseño</title>
+<meta name="description" content="Aparente. Arquitectura interior, mobiliario a medida y terrazo de autor. Arq. Sofía Coronato, Córdoba.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @font-face{
+    font-family:'Cal Sans';
+    src:url('assets/fonts/CalSans-Regular.ttf') format('truetype');
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:'Open Sans';
+    src:url('assets/fonts/OpenSans-VariableFont.ttf') format('truetype-variations');
+    font-weight:300 800;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:'Open Sans';
+    src:url('assets/fonts/OpenSans-Italic-VariableFont.ttf') format('truetype-variations');
+    font-weight:300 800;font-style:italic;font-display:swap;
+  }
+  @font-face{
+    font-family:'Covered By Your Grace';
+    src:url('assets/fonts/CoveredByYourGrace-Regular.ttf') format('truetype');
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+  :root{
+    /* paleta oficial de marca */
+    --cream:#F2EFEA;
+    --cream2:#F8EEC7;
+    --paper:#FBF9F3;
+    --ink:#241A12;
+    --ink-soft:#5A4A38;
+    --muted:#8B7B62;
+    --oxblood:#6D0914;
+    --oxblood-deep:#470610;
+    --olive-deep:#22262C;
+    --stone:#95B1C7;
+    --line:#E2D9B8;
+    --sand:#F8EEC7;
+    --slate:#616B7D;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Open Sans',Arial,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  @media (max-width:640px){.wrap{padding:0 20px;}}
+
+  .mono{font-family:'Space Mono',ui-monospace,monospace;}
+  .script{font-family:'Covered By Your Grace',cursive;font-weight:700;color:var(--oxblood);}
+
+  /* grain texture overlay */
+  .grain{position:relative;}
+  .grain::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    mix-blend-mode:overlay;
+    opacity:0.35;
+  }
+
+  /* faint design grid overlay */
+  .gridlines{position:relative;}
+  .gridlines::before{
+    content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+    background-image:
+      linear-gradient(to right, rgba(244,239,227,0.16) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(244,239,227,0.16) 1px, transparent 1px);
+    background-size: 12.5% 100%, 100% 25%;
+  }
+
+  /* -------- scroll reveal -------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .8s cubic-bezier(.2,.7,.15,1), transform .8s cubic-bezier(.2,.7,.15,1);
+  }
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+  .stagger > *{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .7s cubic-bezier(.2,.7,.15,1), transform .7s cubic-bezier(.2,.7,.15,1);
+  }
+  .stagger.is-visible > *{opacity:1;transform:translateY(0);}
+  .stagger.is-visible > *:nth-child(1){transition-delay:0ms}
+  .stagger.is-visible > *:nth-child(2){transition-delay:90ms}
+  .stagger.is-visible > *:nth-child(3){transition-delay:180ms}
+  .stagger.is-visible > *:nth-child(4){transition-delay:270ms}
+  .stagger.is-visible > *:nth-child(5){transition-delay:360ms}
+  .stagger.is-visible > *:nth-child(6){transition-delay:450ms}
+  .stagger.is-visible > *:nth-child(7){transition-delay:540ms}
+  .stagger.is-visible > *:nth-child(8){transition-delay:630ms}
+
+  @media (prefers-reduced-motion:reduce){
+    .reveal, .stagger > *{opacity:1 !important;transform:none !important;transition:none !important;}
+  }
+
+  /* -------- nav -------- */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,239,227,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 0 0 rgba(36,26,18,0);
+    transition:box-shadow .35s ease;
+  }
+  header.site.scrolled{box-shadow:0 6px 24px rgba(36,26,18,0.10);}
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 32px;max-width:1180px;margin:0 auto;
+  }
+  .nav img.logo{height:34px;width:auto;}
+  .nav-links{display:flex;align-items:center;gap:28px;list-style:none;margin:0;padding:0;}
+  .nav-links a{
+    font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    text-decoration:none;color:var(--ink-soft);
+  }
+  .nav-links a:hover{color:var(--oxblood);}
+  .nav-cta{
+    font-family:'Open Sans',sans-serif;font-weight:700;font-size:13px;
+    background:var(--oxblood);color:var(--cream);
+    padding:9px 18px;border-radius:999px;text-decoration:none;
+    letter-spacing:0.02em;
+  }
+  .nav-cta:hover{background:var(--oxblood-deep);}
+  .nav-toggle{display:none;background:none;border:0;font-size:26px;color:var(--ink);cursor:pointer;}
+  @media (max-width:860px){
+    .nav-links{
+      position:fixed;top:63px;left:0;right:0;background:var(--paper);
+      flex-direction:column;align-items:flex-start;gap:0;
+      border-bottom:1px solid var(--line);
+      max-height:0;overflow:hidden;transition:max-height .25s ease;
+    }
+    .nav-links.open{max-height:320px;}
+    .nav-links li{width:100%;}
+    .nav-links a{display:block;padding:16px 32px;width:100%;border-bottom:1px solid var(--line);}
+    .nav-cta{display:none;}
+    .nav-toggle{display:block;}
+  }
+
+  /* -------- hero -------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:var(--olive-deep);
+    overflow:hidden;
+  }
+  .hero .bg{
+    position:absolute;left:0;right:0;top:-12%;height:124%;
+    background-image:url('assets/img/sofia_construction.jpg');
+    background-size:cover;background-position:center 30%;
+    filter:grayscale(55%) sepia(20%) brightness(0.55) contrast(1.05);
+    will-change:transform;
+  }
+  .hero .duotone{
+    position:absolute;inset:0;
+    background:linear-gradient(160deg, rgba(34,38,44,0.6), rgba(71,6,16,0.55));
+    mix-blend-mode:multiply;
+  }
+  .hero .content{position:relative;z-index:2;padding:0 0 70px 0;}
+  .hero .eyebrow{
+    font-family:'Space Mono',monospace;color:var(--stone);
+    font-size:12.5px;letter-spacing:0.22em;text-transform:uppercase;
+    padding-left:32px;margin-bottom:14px;
+    opacity:0;transform:translateY(14px);
+    animation:heroInUp .8s cubic-bezier(.2,.7,.15,1) .15s forwards;
+  }
+  .hero h1{
+    font-family:'Cal Sans',Arial,sans-serif;font-weight:900;
+    color:var(--cream);
+    font-size:clamp(90px,17vw,240px);
+    line-height:0.82;
+    margin:0;
+    letter-spacing:-0.01em;
+    white-space:nowrap;
+    padding-left:24px;
+    transform:translateX(-6px);
+    opacity:0;
+    animation:heroInFade 1s ease .32s forwards;
+  }
+  .hero .sub{
+    margin-top:26px;padding-left:34px;padding-right:34px;
+    max-width:640px;
+    opacity:0;transform:translateY(14px);
+    animation:heroInUp .8s cubic-bezier(.2,.7,.15,1) .58s forwards;
+  }
+  .hero .sub p{
+    font-family:'Open Sans',Arial,sans-serif;font-style:italic;font-weight:700;
+    color:var(--cream);font-size:clamp(18px,2.4vw,24px);
+    margin:0 0 8px 0;
+  }
+  .hero .sub .fine{
+    font-family:'Open Sans',sans-serif;font-style:normal;font-weight:500;
+    font-size:14px;color:var(--stone);
+  }
+  .hero .scroll-cue{
+    position:absolute;right:32px;bottom:28px;z-index:2;
+    font-family:'Space Mono',monospace;font-size:11px;color:var(--stone);
+    letter-spacing:0.15em;text-transform:uppercase;
+    display:flex;align-items:center;gap:8px;
+    opacity:0;
+    animation:heroInFade .8s ease .95s forwards, floatCue 2.6s ease-in-out 1.8s infinite;
+  }
+  @keyframes heroInUp{to{opacity:1;transform:translateY(0);}}
+  @keyframes heroInFade{to{opacity:1;}}
+  @keyframes floatCue{50%{transform:translateY(5px);}}
+  @media (prefers-reduced-motion:reduce){
+    .hero .eyebrow, .hero h1, .hero .sub, .hero .scroll-cue{animation:none !important;opacity:1 !important;transform:none !important;}
+    .hero h1{transform:translateX(-6px) !important;}
+  }
+  .hero .scroll-cue .line{width:26px;height:1px;background:var(--stone);}
+  @media (max-width:640px){
+    .hero h1{font-size:clamp(46px,15.5vw,120px);white-space:normal;line-height:0.88;padding-left:20px;}
+    .hero .content{padding-bottom:50px;}
+  }
+
+  /* -------- section shell -------- */
+  section{padding:110px 0;position:relative;}
+  section.tight{padding:80px 0;}
+  .eyebrow-label{
+    display:flex;align-items:center;gap:12px;
+    font-family:'Space Mono',monospace;font-size:12px;font-weight:700;
+    letter-spacing:0.16em;text-transform:uppercase;color:var(--oxblood);
+    margin-bottom:22px;
+  }
+  .eyebrow-label .dash{width:34px;height:3px;background:var(--oxblood);}
+
+  h2.big{
+    font-family:'Cal Sans',Arial,sans-serif;font-weight:800;
+    font-size:clamp(46px,7vw,96px);
+    line-height:0.94;
+    margin:0 0 30px 0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  h2.bleed{
+    width:calc(100% + 60px);
+    margin-left:-30px;
+    overflow:visible;
+  }
+  @media (max-width:640px){
+    h2.bleed{width:100%;margin-left:0;}
+  }
+  h3.title{
+    font-family:'Cal Sans',Arial,sans-serif;font-weight:700;
+    font-size:clamp(28px,3.6vw,40px);margin:0 0 10px 0;
+  }
+  p.lede{font-size:18px;color:var(--ink-soft);max-width:60ch;}
+
+  /* -------- estudio / sobre sofia -------- */
+  #estudio{background:var(--paper);}
+  .estudio-grid{
+    display:grid;grid-template-columns: 0.8fr 1.2fr;gap:60px;align-items:start;
+  }
+  @media (max-width:860px){.estudio-grid{grid-template-columns:1fr;gap:40px;}}
+  .framed{
+    background:var(--cream2);
+    padding:18px;
+    border:1px solid var(--line);
+    position:relative;
+  }
+  .framed img{width:100%;height:auto;display:block;}
+  .badge-annot{
+    position:absolute;
+    font-family:'Covered By Your Grace',cursive;font-weight:700;color:var(--oxblood);
+    font-size:20px;line-height:1.15;text-align:center;
+    width:170px;
+    display:flex;align-items:center;justify-content:center;
+    transform:rotate(-9deg);
+  }
+  .badge-annot svg{position:absolute;inset:0;width:100%;height:100%;}
+  .badge-annot span{position:relative;z-index:1;padding:8px;}
+  .estudio-copy p{font-size:17px;color:var(--ink-soft);max-width:56ch;}
+  .estudio-copy .accent{font-style:italic;font-weight:600;color:var(--ink);}
+  .mini-collage{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;
+  }
+  .mini-collage figure{margin:0;border:1px solid var(--line);background:var(--cream2);padding:8px;}
+  .mini-collage img{aspect-ratio:4/5;object-fit:cover;width:100%;}
+  .mini-collage figcaption{
+    font-family:'Space Mono',monospace;font-size:10.5px;color:var(--muted);
+    margin-top:8px;text-transform:uppercase;letter-spacing:0.05em;
+  }
+
+  /* -------- servicios -------- */
+  #servicios{background:var(--cream);}
+  .servicios-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  @media (max-width:900px){.servicios-grid{grid-template-columns:1fr;gap:40px;}}
+  ul.services{list-style:none;padding:0;margin:26px 0;}
+  ul.services li{
+    display:flex;gap:16px;align-items:baseline;
+    padding:16px 0;border-top:1px solid var(--line);
+    font-family:'Cal Sans',Arial,sans-serif;font-weight:600;font-size:21px;
+  }
+  ul.services li:last-child{border-bottom:1px solid var(--line);}
+  ul.services li .x{
+    font-family:'Space Mono',monospace;color:var(--oxblood);font-weight:700;font-size:18px;
+  }
+  .annot-circle{
+    display:inline-flex;align-items:center;justify-content:center;
+    position:relative;width:220px;height:100px;margin-top:8px;
+  }
+  .annot-circle svg{position:absolute;inset:0;width:100%;height:100%;}
+  .annot-circle span{
+    position:relative;z-index:1;font-family:'Covered By Your Grace',cursive;font-weight:700;
+    color:var(--oxblood);font-size:22px;text-align:center;transform:rotate(-4deg);padding:0 10px;
+  }
+  .servicios-photos{display:grid;grid-template-columns:1fr;gap:14px;}
+  .servicios-photos .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .servicios-photos img{width:100%;height:100%;object-fit:cover;}
+  .servicios-photos .hero-shot{aspect-ratio:4/5;}
+  .servicios-photos .small-shot{aspect-ratio:1/1;}
+
+  /* -------- productos (tienda) -------- */
+  #productos{background:var(--cream2);border-top:4px solid var(--oxblood);border-bottom:4px solid var(--oxblood);}
+  .product-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:44px;
+  }
+  @media (min-width:961px){.product-grid > article:nth-child(5):last-child{grid-column:2 / span 2;}}
+  @media (max-width:960px){.product-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.product-grid{grid-template-columns:1fr;}}
+
+  .product-photo.carousel{position:relative;overflow:hidden;}
+  .carousel-track{display:flex;height:100%;transition:transform .4s ease;}
+  .carousel-track img{width:100%;height:100%;object-fit:cover;flex:none;}
+  .carousel-dots{
+    position:absolute;bottom:12px;left:0;right:0;z-index:3;
+    display:flex;justify-content:center;gap:7px;
+  }
+  .carousel-dots .dot{
+    width:7px;height:7px;border-radius:50%;padding:0;border:none;
+    background:rgba(255,255,255,0.55);cursor:pointer;
+  }
+  .carousel-dots .dot.active{background:#fff;}
+  .carousel-prev,.carousel-next{
+    position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+    width:32px;height:32px;border-radius:50%;border:none;
+    background:rgba(36,26,18,0.4);color:#fff;font-size:18px;line-height:1;
+    cursor:pointer;opacity:0;transition:opacity .2s ease;
+  }
+  .product-photo.carousel:hover .carousel-prev,
+  .product-photo.carousel:hover .carousel-next{opacity:1;}
+  .carousel-prev{left:8px;}
+  .carousel-next{right:8px;}
+  @media (max-width:960px){
+    .carousel-prev,.carousel-next{opacity:1;}
+  }
+  .product-card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-top:5px solid var(--oxblood);
+    border-radius:2px;
+    padding:20px 20px 26px 20px;
+    display:flex;flex-direction:column;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .product-card:hover{transform:translateY(-6px);box-shadow:0 18px 34px rgba(109,9,20,0.18);}
+  .product-photo{aspect-ratio:4/5;overflow:hidden;margin-bottom:16px;background:var(--line);}
+  .product-photo img{width:100%;height:100%;object-fit:cover;}
+  .product-tag{
+    display:inline-block;align-self:flex-start;
+    background:var(--oxblood);color:var(--cream);
+    font-family:'Open Sans',sans-serif;font-weight:800;font-size:11px;letter-spacing:0.06em;
+    text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:12px;
+  }
+  .product-card h3{font-family:'Cal Sans',Arial,sans-serif;font-size:24px;margin:0 0 8px 0;color:var(--ink);}
+  .product-card p{font-size:14.5px;color:var(--ink-soft);margin:0;flex:1;}
+  .product-cta{
+    display:inline-block;margin-top:18px;
+    font-family:'Open Sans',sans-serif;font-weight:800;font-size:14px;
+    color:var(--oxblood);text-decoration:none;
+    border-bottom:2px solid var(--oxblood);padding-bottom:2px;
+    align-self:flex-start;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .product-cta:hover{color:var(--oxblood-deep);border-color:var(--oxblood-deep);}
+
+  /* -------- proceso -------- */
+  #proceso{background:var(--paper);}
+  .steps{margin-top:40px;}
+  .step{
+    display:grid;grid-template-columns:90px 1fr;gap:26px;
+    padding:34px 0;border-top:1px solid var(--line);
+    position:relative;
+  }
+  .step:first-child{border-top:none;}
+  .step .num{
+    font-family:'Cal Sans',Arial,sans-serif;font-weight:800;font-size:40px;color:var(--oxblood);
+  }
+  .step-rule{border-left:3px solid var(--oxblood);padding-left:22px;}
+  .step h4{font-family:'Cal Sans',Arial,sans-serif;font-size:23px;font-weight:700;margin:0 0 8px 0;}
+  .step p{margin:0;color:var(--ink-soft);max-width:62ch;}
+  .step .includes{margin:14px 0 0 0;padding-left:18px;color:var(--ink-soft);font-size:14.5px;}
+  .step .includes li{margin-bottom:4px;font-style:italic;}
+  .proceso-side{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  @media (max-width:900px){.proceso-side{grid-template-columns:1fr;}}
+  .proceso-side .imgcol{position:sticky;top:100px;}
+  .proceso-side .imgcol .framed{margin-bottom:16px;}
+  @media (max-width:900px){.proceso-side .imgcol{position:static;}}
+
+  /* -------- proyectos -------- */
+  #proyectos{background:var(--olive-deep);color:var(--cream);}
+  #proyectos .eyebrow-label{color:var(--sand);}
+  #proyectos .eyebrow-label .dash{background:var(--sand);}
+  #proyectos h2.big{color:var(--cream);}
+  #proyectos p.lede{color:var(--stone);}
+
+  .case{
+    margin-top:100px;padding-top:70px;border-top:1px solid rgba(244,239,227,0.18);
+  }
+  .case:first-of-type{margin-top:70px;}
+  .case-head{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;
+    margin-bottom:36px;
+  }
+  .case-head h3{
+    font-family:'Cal Sans',Arial,sans-serif;font-weight:900;
+    font-size:clamp(38px,6vw,72px);color:var(--cream);margin:0;line-height:0.95;
+  }
+  .case-tags{display:flex;flex-wrap:wrap;gap:10px;}
+  .case-tags span{
+    font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:0.04em;
+    border:1px solid rgba(244,239,227,0.4);color:var(--cream);
+    padding:6px 12px;border-radius:999px;text-transform:uppercase;
+  }
+  .case-tags span:first-child{background:var(--oxblood);border-color:var(--oxblood);font-weight:700;}
+  .case p.desc{color:var(--stone);max-width:70ch;font-size:16.5px;margin-bottom:34px;}
+  .case-gallery{display:grid;gap:34px 28px;padding:10px;}
+  .g-2{grid-template-columns:1fr 1fr;}
+  .g-3{grid-template-columns:1.3fr 1fr 1fr;}
+  .g-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:760px){.case-gallery{grid-template-columns:1fr 1fr !important;}}
+  .case-gallery .polaroid{
+    background:#FBF8EF;
+    padding:12px 12px 32px 12px;
+    box-shadow:0 14px 28px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.25);
+    transform:rotate(var(--rot, 0deg));
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .case-gallery .polaroid:hover{
+    transform:rotate(0deg) scale(1.03);
+    box-shadow:0 20px 36px rgba(0,0,0,0.4), 0 4px 10px rgba(0,0,0,0.3);
+    z-index:2;
+  }
+  .case-gallery .polaroid img{width:100%;height:100%;object-fit:cover;display:block;}
+  .case-gallery .polaroid.tall img{aspect-ratio:3/4;}
+  .case-gallery .polaroid.wide{grid-column:span 2;}
+  .case-gallery .polaroid.wide img{aspect-ratio:4/3;}
+  .case-gallery .polaroid.square img{aspect-ratio:1/1;}
+  .loc-pair{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:10px;}
+  @media (max-width:760px){.loc-pair{grid-template-columns:1fr;gap:34px;}}
+  .loc-pair .loc-label{
+    font-family:'Space Mono',monospace;font-size:11.5px;color:var(--sand);
+    text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;
+  }
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:34px 0;}
+  @media (max-width:640px){.compare{grid-template-columns:1fr;}}
+  .compare figure{margin:0;}
+  .compare img{width:100%;aspect-ratio:4/3;object-fit:cover;}
+  .compare figcaption{
+    font-family:'Space Mono',monospace;font-size:11px;color:var(--stone);
+    text-transform:uppercase;letter-spacing:0.06em;margin-top:8px;
+  }
+
+  .technical-block{
+    background:rgba(244,239,227,0.06);
+    border:1px solid rgba(244,239,227,0.18);
+    padding:30px;margin:34px 0;
+    display:grid;grid-template-columns:1fr 1.3fr;gap:30px;align-items:center;
+  }
+  @media (max-width:760px){.technical-block{grid-template-columns:1fr;}}
+  .technical-block img{width:100%;border:1px solid rgba(244,239,227,0.25);background:#fff;}
+  .technical-block .note{font-family:'Space Mono',monospace;font-size:12.5px;color:var(--stone);}
+  .technical-block h4{font-family:'Cal Sans',Arial,sans-serif;font-size:20px;margin:0 0 10px 0;color:var(--cream);}
+
+  .swatches{display:flex;gap:22px;margin:30px 0;flex-wrap:wrap;}
+  .swatch{text-align:center;}
+  .swatch img{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid rgba(244,239,227,0.35);}
+  .swatch span{
+    display:block;margin-top:10px;font-family:'Covered By Your Grace',cursive;font-size:16px;color:var(--stone);
+    max-width:100px;
+  }
+
+  /* -------- terrazo -------- */
+  #terrazo{background:var(--cream2);}
+  .terrazo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px;}
+  @media (max-width:900px){.terrazo-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:480px){.terrazo-grid{grid-template-columns:1fr;}}
+  .terrazo-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;}
+  .terrazo-strip{
+    height:26px;width:100%;
+    background-image:url('assets/img/terrazo_tile.jpg');
+    background-repeat:repeat-x;
+    background-size:auto 100%;
+    border-top:1px solid rgba(36,26,18,0.15);
+    border-bottom:1px solid rgba(36,26,18,0.15);
+  }
+
+  /* -------- contacto -------- */
+  #contacto{background:var(--oxblood-deep);color:var(--cream);text-align:left;}
+  #contacto .eyebrow-label{color:var(--sand);}
+  #contacto .eyebrow-label .dash{background:var(--sand);}
+  #contacto h2.big{color:var(--cream);}
+  .contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:end;}
+  @media (max-width:800px){.contact-grid{grid-template-columns:1fr;}}
+  .whats-btn{
+    display:inline-flex;align-items:center;gap:12px;
+    background:var(--cream);color:var(--oxblood-deep);
+    font-family:'Open Sans',sans-serif;font-weight:800;font-size:17px;
+    padding:18px 30px;border-radius:999px;text-decoration:none;margin-top:24px;
+  }
+  .contact-list{list-style:none;padding:0;margin:0;font-family:'Space Mono',monospace;font-size:14px;}
+  .contact-list li{padding:12px 0;border-top:1px solid rgba(244,239,227,0.2);}
+  .contact-list a{text-decoration:none;color:var(--cream);}
+  footer.site-footer{
+    background:var(--oxblood-deep);color:var(--stone);
+    border-top:1px solid rgba(244,239,227,0.2);
+    padding:24px 0;font-family:'Space Mono',monospace;font-size:11.5px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <a href="#inicio"><img class="logo" src="assets/img/logo_aparente_transparent.png" alt="Aparente"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#estudio">Estudio</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#terrazo">Terrazo</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a class="nav-cta" href="https://wa.link/awn3f1" target="_blank" rel="noopener">Escribinos</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </nav>
+</header>
+
+<section id="inicio" class="hero">
+  <div class="bg"></div>
+  <div class="duotone"></div>
+  <div class="content">
+    <div class="eyebrow">Estudio de diseño — Córdoba, Argentina</div>
+    <h1>APARENTE</h1>
+    <div class="sub">
+      <p>Mirar no es <span class="script" style="color:#E9C7A8">entender</span>.</p>
+      <p class="fine">El diseño empieza desde lo que no se ve.</p>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="line"></span> Desplazate</div>
+</section>
+
+<section id="estudio" class="tight">
+  <div class="wrap">
+    <div class="eyebrow-label reveal"><span class="dash"></span>01 — El estudio</div>
+    <div class="estudio-grid">
+      <div>
+        <div class="framed reveal">
+          <img src="assets/img/sofia_portrait.jpg" alt="Arq. Sofía Coronato">
+        </div>
+      </div>
+      <div class="estudio-copy">
+        <h2 class="big reveal" style="font-size:clamp(36px,5vw,58px);">Hola,<br>soy Sofía</h2>
+        <p class="reveal">Arquitecta especializada en Diseño del Espacio Interior, pero sobretodo soy una persona <span class="accent">apasionada</span> por el diseño en todas sus formas.</p>
+        <p class="reveal">Este amor me llevó a fusionar la arquitectura, el interiorismo y el mobiliario en un estudio creativo con materialidad propia en terrazo. Así nació Aparente, con la convicción de que <span class="accent">el diseño empieza desde lo que no se ve</span>.</p>
+
+        <div class="mini-collage stagger">
+          <figure>
+            <img src="assets/img/sofia_workshop.jpg" alt="Mesa de trabajo del taller" loading="lazy">
+            <figcaption>Taller</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/sofia_sketch.jpg" alt="Boceto y muestras" loading="lazy">
+            <figcaption>Boceto</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/sofia_construction.jpg" alt="Obra en construcción" loading="lazy">
+            <figcaption>Obra</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="terrazo-strip"></div>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="eyebrow-label reveal"><span class="dash"></span>02 — Servicios</div>
+    <div class="servicios-grid">
+      <div>
+        <h2 class="big reveal">¿Qué<br>hacemos?</h2>
+        <ul class="services stagger">
+          <li><span class="x">x</span> Proyecto desde cero / reformas</li>
+          <li><span class="x">x</span> Proyecto integral de interiorismo</li>
+          <li><span class="x">x</span> Desarrollo de mobiliario</li>
+          <li><span class="x">x</span> Conducción y dirección de obra</li>
+        </ul>
+        <div class="annot-circle">
+          <svg viewBox="0 0 220 100" fill="none"><ellipse cx="110" cy="50" rx="100" ry="38" stroke="#6E1F1F" stroke-width="2.5" transform="rotate(-6 110 50)"/></svg>
+          <span>creamos espacios<br>con intención</span>
+        </div>
+      </div>
+      <div class="servicios-photos">
+        <img class="hero-shot reveal" src="assets/img/servicios_comedor_hero.jpg" alt="Comedor con sillas de caña y lámparas de papel" loading="lazy">
+        <div class="row stagger">
+          <img class="small-shot" src="assets/img/servicios_comedor_detalle.jpg" alt="Detalle de silla de caña" loading="lazy">
+          <img class="small-shot" src="assets/img/servicios_comedor_lamparas_wide.jpg" alt="Comedor con lámparas de papel" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="productos">
+  <div class="wrap">
+    <div class="eyebrow-label reveal"><span class="dash"></span>03 — Objetos y mobiliario</div>
+    <h2 class="big reveal">Piezas para<br>llevar a tu casa</h2>
+    <p class="lede reveal">Mobiliario y objetos de autor, hechos a medida. Cada pieza es única, consultanos por la tuya.</p>
+
+    <div class="product-grid stagger">
+      <article class="product-card">
+        <div class="product-photo carousel" data-carousel>
+          <div class="carousel-track">
+            <img src="assets/img/terrazo_mate_terraza.jpg" alt="Mesa QBO en una terraza, con mate y termo" loading="lazy">
+            <img src="assets/img/terrazo_mesa_living.jpg" alt="Mesa QBO en un living, con café y un libro" loading="lazy">
+          </div>
+          <div class="carousel-dots"><button class="dot active"></button><button class="dot"></button></div>
+          <button class="carousel-prev" aria-label="Foto anterior">‹</button>
+          <button class="carousel-next" aria-label="Foto siguiente">›</button>
+        </div>
+        <span class="product-tag">Terrazo de autor</span>
+        <h3>Mesa QBO</h3>
+        <p>Mesa ratona redonda, terrazo a medida sobre base metálica.</p>
+        <a class="product-cta" href="https://wa.link/awn3f1" target="_blank" rel="noopener">Consultar esta pieza →</a>
+      </article>
+
+      <article class="product-card">
+        <div class="product-photo carousel" data-carousel>
+          <div class="carousel-track">
+            <img src="assets/img/servicios_comedor_hero.jpg" alt="Mesa de comedor a medida" loading="lazy">
+            <img src="assets/img/servicios_comedor_detalle.jpg" alt="Detalle de silla de caña" loading="lazy">
+            <img src="assets/img/servicios_comedor_lamparas_wide.jpg" alt="Comedor con lámparas de papel" loading="lazy">
+          </div>
+          <div class="carousel-dots"><button class="dot active"></button><button class="dot"></button><button class="dot"></button></div>
+          <button class="carousel-prev" aria-label="Foto anterior">‹</button>
+          <button class="carousel-next" aria-label="Foto siguiente">›</button>
+        </div>
+        <span class="product-tag">Mobiliario a medida</span>
+        <h3>Mesas de comedor</h3>
+        <p>Diseñadas a medida de tu espacio, en el material y la madera que elijas.</p>
+        <a class="product-cta" href="https://wa.link/awn3f1" target="_blank" rel="noopener">Consultar esta pieza →</a>
+      </article>
+
+      <article class="product-card">
+        <div class="product-photo carousel" data-carousel>
+          <div class="carousel-track">
+            <img src="assets/img/terrazo_objetos_bano.jpg" alt="Set de baño en terrazo oscuro" loading="lazy">
+            <img src="assets/img/terrazo_bano_gris.jpg" alt="Set de baño en terrazo gris" loading="lazy">
+            <img src="assets/img/terrazo_bano_rosa.jpg" alt="Set de baño en terrazo claro" loading="lazy">
+          </div>
+          <div class="carousel-dots"><button class="dot active"></button><button class="dot"></button><button class="dot"></button></div>
+          <button class="carousel-prev" aria-label="Foto anterior">‹</button>
+          <button class="carousel-next" aria-label="Foto siguiente">›</button>
+        </div>
+        <span class="product-tag">Terrazo de autor</span>
+        <h3>Set de baño</h3>
+        <p>Vaso, jabonera y dispenser en terrazo. A medida, en el color que prefieras.</p>
+        <a class="product-cta" href="https://wa.link/awn3f1" target="_blank" rel="noopener">Consultar esta pieza →</a>
+      </article>
+
+      <article class="product-card">
+        <div class="product-photo carousel" data-carousel>
+          <div class="carousel-track">
+            <img src="assets/img/maceta_pote_rustico.jpg" alt="Maceta de terrazo, tono rústico" loading="lazy">
+            <img src="assets/img/maceta_silla_rosa.jpg" alt="Maceta de terrazo blanca y negra" loading="lazy">
+            <img src="assets/img/maceta_blanca_suculenta.jpg" alt="Maceta de terrazo con suculenta" loading="lazy">
+          </div>
+          <div class="carousel-dots"><button class="dot active"></button><button class="dot"></button><button class="dot"></button></div>
+          <button class="carousel-prev" aria-label="Foto anterior">‹</button>
+          <button class="carousel-next" aria-label="Foto siguiente">›</button>
+        </div>
+        <span class="product-tag">Terrazo de autor</span>
+        <h3>Macetas</h3>
+        <p>Para tus plantas de siempre, en terrazo a medida y en el color que elijas.</p>
+        <a class="product-cta" href="https://wa.link/awn3f1" target="_blank" rel="noopener">Consultar esta pieza →</a>
+      </article>
+
+      <article class="product-card">
+        <div class="product-photo carousel" data-carousel>
+          <div class="carousel-track">
+            <img src="assets/img/terrazo_muestras.jpg" alt="Muestras de terrazo a medida" loading="lazy">
+            <img src="assets/img/creambury_vcp_left2.jpg" alt="Mesada de terrazo en un local real" loading="lazy">
+          </div>
+          <div class="carousel-dots"><button class="dot active"></button><button class="dot"></button></div>
+          <button class="carousel-prev" aria-label="Foto anterior">‹</button>
+          <button class="carousel-next" aria-label="Foto siguiente">›</button>
+        </div>
+        <span class="product-tag">Terrazo de autor</span>
+        <h3>Tu pieza, a medida</h3>
+        <p>Mesadas, bachas, mesas o el objeto que tengas en mente. Elegimos juntos el color y el agregado.</p>
+        <a class="product-cta" href="https://wa.link/awn3f1" target="_blank" rel="noopener">Consultar mi proyecto →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="proceso">
+  <div class="wrap">
+    <div class="eyebrow-label reveal"><span class="dash"></span>04 — El proceso</div>
+    <div class="proceso-side">
+      <div>
+        <h2 class="big reveal">¿Cómo<br>trabajamos?</h2>
+        <p class="lede reveal">Un proceso claro, de la primera charla a la obra terminada. Sin improvisar.</p>
+      </div>
+      <div class="imgcol">
+        <div class="framed reveal"><img src="assets/img/fj_render_iso.jpg" alt="Render 3D del proyecto" loading="lazy"></div>
+        <div class="framed reveal"><img src="assets/img/fj_technical.jpg" alt="Planos técnicos acotados" loading="lazy"></div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="num mono">01</div>
+        <div class="step-rule">
+          <h4>Reunión inicial</h4>
+          <p>Nos conocemos, entendemos tus necesidades, tu presupuesto y tus gustos. Tomamos las medidas necesarias del espacio. Sin compromiso.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="num mono">02</div>
+        <div class="step-rule">
+          <h4>Anteproyecto</h4>
+          <p>En la segunda reunión les presentamos las propuestas, selección de materiales, con distintas opciones de distribución, acompañada de planos y renders para que puedas visualizarlo de forma clara.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="num mono">03</div>
+        <div class="step-rule">
+          <h4>Documentación final</h4>
+          <p>Después de hacer las modificaciones necesarias, armamos un documento final con toda la información, documentación y presupuestos para llevar a cabo el proyecto.</p>
+          <ul class="includes">
+            <li>Concepto general de diseño</li>
+            <li>Moodboards (propuesta de materiales)</li>
+            <li>Planos de distribución</li>
+            <li>Detalles constructivos</li>
+            <li>Renders (imágenes fotorrealistas de los espacios)</li>
+            <li>Selección de mobiliario e iluminación</li>
+            <li>Diseño de mobiliario a medida y detalle para su ejecución</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="num mono">04</div>
+        <div class="step-rule">
+          <h4>Inicio de obra</h4>
+          <p>Una vez definido el proyecto y presupuesto comenzamos a ejecutar la obra de forma clara y ordenada, sin improvisar y coordinando las distintas etapas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proyectos">
+  <div class="wrap">
+    <div class="eyebrow-label reveal"><span class="dash"></span>05 — Proyectos</div>
+    <h2 class="big bleed reveal">PROYECTOS</h2>
+    <p class="lede reveal">Cuatro obras, un mismo criterio: que el diseño resuelva antes de decorar.</p>
+
+    <!-- CREAMBURY -->
+    <article class="case">
+      <div class="case-head reveal">
+        <h3>Creambury</h3>
+        <div class="case-tags">
+          <span>Interiorismo comercial</span>
+          <span>Terrazo a medida</span>
+          <span>2025</span>
+        </div>
+      </div>
+      <p class="desc reveal">Franquicia de heladería y cafetería. Dos sucursales con una misma identidad, resuelta con terrazo de autor en mesadas, mesas y barras.</p>
+
+      <div class="loc-pair stagger">
+        <div>
+          <div class="loc-label">Sucursal Villa Carlos Paz</div>
+          <div class="case-gallery g-2 stagger">
+            <div class="polaroid tall" style="--rot:-2.5deg"><img src="assets/img/creambury_vcp_hero_left1.jpg" alt="Creambury Villa Carlos Paz, salón con mesa de terrazo" loading="lazy"></div>
+            <div class="polaroid tall" style="--rot:2deg"><img src="assets/img/creambury_vcp_big_right.jpg" alt="Creambury Villa Carlos Paz, barra sobre la calle" loading="lazy"></div>
+            <div class="polaroid square" style="--rot:-1.5deg"><img src="assets/img/creambury_vcp_left2.jpg" alt="Mostrador con mesada de terrazo" loading="lazy"></div>
+            <div class="polaroid square" style="--rot:1.8deg"><img src="assets/img/creambury_vcp_left3.jpg" alt="Salón Creambury" loading="lazy"></div>
+          </div>
+        </div>
+        <div>
+          <div class="loc-label">Sucursal Alta Gracia</div>
+          <div class="case-gallery g-2 stagger">
+            <div class="polaroid tall" style="--rot:-2deg"><img src="assets/img/creambury_ag_left1.jpg" alt="Creambury Alta Gracia" loading="lazy"></div>
+            <div class="polaroid tall" style="--rot:1.5deg"><img src="assets/img/creambury_ag_big_right.jpg" alt="Creambury Alta Gracia, salón completo" loading="lazy"></div>
+            <div class="polaroid square" style="--rot:-1.8deg"><img src="assets/img/creambury_ag_left2.jpg" alt="Mostrador Creambury Alta Gracia" loading="lazy"></div>
+            <div class="polaroid square" style="--rot:2.2deg"><img src="assets/img/creambury_ag_left3.jpg" alt="Cartel Creambury" loading="lazy"></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROYECTO EM -->
+    <article class="case">
+      <div class="case-head reveal">
+        <h3>Proyecto EM</h3>
+        <div class="case-tags">
+          <span>Interiorismo residencial</span>
+          <span>2026</span>
+          <span>Miradores de Manantiales</span>
+        </div>
+      </div>
+      <p class="desc reveal">El proyecto resuelve la necesidad de crear un espacio de home office doble, en un dormitorio que debía mantener la función de cuarto de visitas ocasionales. Planteando una cama abatible, diseñamos muebles funcionales que puedan albergar estas funciones, combinando maderas claras y oscuras, y sumando acentos de color.</p>
+
+      <div class="compare stagger">
+        <figure>
+          <img src="assets/img/em_before.jpg" alt="Dormitorio antes de la intervención" loading="lazy">
+          <figcaption>Antes</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/em_desk_after.jpg" alt="Home office terminado" loading="lazy">
+          <figcaption>Después</figcaption>
+        </figure>
+      </div>
+      <div class="case-gallery" style="grid-template-columns:1fr;">
+        <div class="polaroid wide" style="--rot:-1.2deg"><img src="assets/img/em_final_bed.jpg" alt="Cama abatible integrada al mueble" loading="lazy"></div>
+      </div>
+
+      <div class="swatches stagger">
+        <div class="swatch"><img src="assets/img/em_swatches.jpg" alt="Paleta de materiales EM" loading="lazy" style="border-radius:8px;width:220px;height:110px;object-fit:cover;"></div>
+      </div>
+    </article>
+
+    <!-- PROYECTO FJ -->
+    <article class="case">
+      <div class="case-head reveal">
+        <h3>Proyecto FJ</h3>
+        <div class="case-tags">
+          <span>Interiorismo residencial</span>
+          <span>2025</span>
+          <span>Nueva Córdoba</span>
+        </div>
+      </div>
+      <p class="desc reveal">El cliente buscaba optimizar el dormitorio y agregar un espacio de home office. Sumamos espacio de guardado y planteamos una distribución funcional; aportamos calidez con los materiales e iluminación.</p>
+
+      <div class="compare stagger">
+        <figure>
+          <img src="assets/img/fj_before.jpg" alt="Dormitorio antes de la intervención" loading="lazy">
+          <figcaption>Antes</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/fj_after_bed.jpg" alt="Dormitorio con nueva distribución" loading="lazy">
+          <figcaption>Después</figcaption>
+        </figure>
+      </div>
+
+      <div class="technical-block reveal">
+        <img src="assets/img/fj_technical.jpg" alt="Detalle técnico del mueble a medida" loading="lazy">
+        <div>
+          <h4>Diseño de mobiliario a medida</h4>
+          <p class="note">Puertas con cierre suave · tira LED embutida 1 cm · cajonera para zapatos.</p>
+        </div>
+      </div>
+
+      <div class="compare stagger">
+        <figure>
+          <img src="assets/img/fj_render_iso.jpg" alt="Render 3D del ambiente">
+          <figcaption>Render</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/fj_render_real_match.jpg" alt="Foto real del ambiente terminado">
+          <figcaption>Resultado real</figcaption>
+        </figure>
+      </div>
+
+      <div class="case-gallery g-2 stagger">
+        <div class="polaroid tall" style="--rot:-1.7deg"><img src="assets/img/fj_final_desk1.jpg" alt="Dormitorio terminado, vista 1" loading="lazy"></div>
+        <div class="polaroid tall" style="--rot:2deg"><img src="assets/img/fj_final_desk2.jpg" alt="Dormitorio terminado, vista 2" loading="lazy"></div>
+      </div>
+
+      <div class="swatches stagger">
+        <div class="swatch"><img src="assets/img/fj_materials_circles.jpg" alt="Paleta de materiales FJ" loading="lazy" style="border-radius:8px;width:220px;height:110px;object-fit:cover;"></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="terrazo">
+  <div class="wrap">
+    <div class="eyebrow-label reveal"><span class="dash"></span>06 — Materialidad propia</div>
+    <h2 class="big reveal">Terrazo<br>de autor</h2>
+    <p class="lede reveal">La búsqueda y exploración de la materialidad es lo que distingue a Aparente. Hoy, esa exploración vive en el terrazo, diseñado a medida para cada espacio según el proyecto.</p>
+    <div class="terrazo-grid stagger">
+      <img src="assets/img/terrazo_objetos_bano.jpg" alt="Objetos de terrazo de autor: vaso, jabonera y dispenser" loading="lazy">
+      <img src="assets/img/terrazo_mesa_living.jpg" alt="Mesa ratona de terrazo en living" loading="lazy">
+      <img src="assets/img/terrazo_mate_terraza.jpg" alt="Mesa de terrazo en una terraza, con mate y termo" loading="lazy">
+      <img src="assets/img/terrazo_muestras.jpg" alt="Muestras de piezas de terrazo de autor" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<div class="terrazo-strip"></div>
+
+<section id="contacto">
+  <div class="wrap">
+    <div class="eyebrow-label reveal"><span class="dash"></span>07 — Contacto</div>
+    <div class="contact-grid">
+      <div>
+        <h2 class="big reveal">Hablemos<br>de tu espacio</h2>
+        <a class="whats-btn reveal" href="https://wa.link/awn3f1" target="_blank" rel="noopener">Escribinos por WhatsApp →</a>
+      </div>
+      <ul class="contact-list reveal">
+        <li>Instagram — <a href="https://instagram.com/aparente.estudio" target="_blank" rel="noopener">@aparente.estudio</a></li>
+        <li>Teléfono — <a href="tel:+543518600558">351 8600558</a></li>
+        <li>Córdoba capital y alrededores</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:8px;">
+    <span>APARENTE — ESTUDIO DE DISEÑO</span>
+    <span>ARQ. SOFÍA CORONATO — CÓRDOBA</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function(){
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(function(a){
+    a.addEventListener('click', function(){
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* scroll reveal */
+  var revealEls = document.querySelectorAll('.reveal, .stagger');
+  if ('IntersectionObserver' in window && !prefersReduced) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* nav shadow + hero parallax on scroll */
+  var header = document.querySelector('header.site');
+  var heroBg = document.querySelector('.hero .bg');
+  var hero = document.querySelector('.hero');
+  var ticking = false;
+  function onScroll(){
+    var y = window.scrollY;
+    header.classList.toggle('scrolled', y > 10);
+    if (heroBg && !prefersReduced) {
+      var heroH = hero.offsetHeight;
+      if (y < heroH) { heroBg.style.transform = 'translateY(' + (y * 0.15) + 'px)'; }
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+  }, { passive: true });
+  onScroll();
+
+  /* product photo carousels */
+  document.querySelectorAll('[data-carousel]').forEach(function(car){
+    var track = car.querySelector('.carousel-track');
+    var slides = Array.prototype.slice.call(track.children);
+    var dots = car.querySelectorAll('.carousel-dots .dot');
+    var prevBtn = car.querySelector('.carousel-prev');
+    var nextBtn = car.querySelector('.carousel-next');
+    if (slides.length <= 1) {
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      return;
+    }
+    var idx = 0;
+    function go(n){
+      idx = (n + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function(e){ e.preventDefault(); go(idx - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function(e){ e.preventDefault(); go(idx + 1); });
+    dots.forEach(function(d, i){ d.addEventListener('click', function(){ go(i); }); });
+    var startX = null;
+    car.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, { passive: true });
+    car.addEventListener('touchend', function(e){
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) { go(idx + (dx < 0 ? 1 : -1)); }
+      startX = null;
+    }, { passive: true });
+  });
+</script>
+</body>
+</html>
