@@ -333,6 +333,7 @@
   .product-grid{
     display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:44px;
   }
+  @media (min-width:961px){.product-grid > article:nth-child(5):last-child{grid-column:2 / span 2;}}
   @media (max-width:960px){.product-grid{grid-template-columns:1fr 1fr;}}
   @media (max-width:560px){.product-grid{grid-template-columns:1fr;}}
 
@@ -643,6 +644,22 @@
         <span class="product-tag">Terrazo de autor</span>
         <h3>Mesa HAUS</h3>
         <p>Mesa ratona redonda, terrazo a medida sobre base metálica.</p>
+        <a class="product-cta" href="https://wa.link/awn3f1" target="_blank" rel="noopener">Consultar esta pieza →</a>
+      </article>
+
+      <article class="product-card">
+        <div class="product-photo carousel" data-carousel>
+          <div class="carousel-track">
+            <img src="assets/img/mesa_qbo_terraza1.jpg" alt="Mesa QBO en una terraza" loading="lazy">
+            <img src="assets/img/mesa_qbo_terraza2.jpg" alt="Mesa QBO vista cenital, con mate y termo" loading="lazy">
+          </div>
+          <div class="carousel-dots"><button class="dot active"></button><button class="dot"></button></div>
+          <button class="carousel-prev" aria-label="Foto anterior">‹</button>
+          <button class="carousel-next" aria-label="Foto siguiente">›</button>
+        </div>
+        <span class="product-tag">Terrazo de autor</span>
+        <h3>Mesa QBO</h3>
+        <p>Mesa ratona rectangular, patas rectas, terrazo a medida sobre base metálica.</p>
         <a class="product-cta" href="https://wa.link/awn3f1" target="_blank" rel="noopener">Consultar esta pieza →</a>
       </article>
 
